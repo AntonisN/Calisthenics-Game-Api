@@ -1,6 +1,7 @@
 # Calisthenics Game Api
   
-  An API that retrieves different parameters of calisthenics exercises 
+  A very alpha version API that retrieves different parameters of calisthenics exercises 
+  
   Live Demo : https://calisthenics-game-api.herokuapp.com/
   
 # Tech used :
