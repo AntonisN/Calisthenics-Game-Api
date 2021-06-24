@@ -5,7 +5,7 @@
   Live Demo : https://calisthenics-game-api.herokuapp.com/
   
 # Tech used :
-    JS,Node.JS,Express
+    JS,Node.JS,Express,MongoDB
     
 # Optimizations
 
