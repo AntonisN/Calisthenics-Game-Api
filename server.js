@@ -1,14 +1,26 @@
-// const path = require('path')
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const cors = require('cors')
-const PORT = 9000
+const PORT = 8000
+
+const MongoClient = require('mongodb').MongoClient
+MongoClient.connect(
+	'mongodb+srv://cali:py4BWnAfx7ioCCV2@cluster0.a5wqq.mongodb.net/caliDB?retryWrites=true&w=majority',
+	{
+		useUnifiedTopology: true,
+	},
+	(err, client) => {
+		if (err) return console.error(err)
+		console.log('Connected to Database')
+	}
+)
 
 app.use(cors())
-app.use('/client-side', express.static('./client-side/'))  // 
+app.use('/client-side', express.static('./client-side/'))
 
 let caliExercise = {
-	'handstand': {
+	handstand: {
 		name: `Handstand`,
 		level: 5,
 		description: `Hold handstand for 20s`,
@@ -22,7 +34,7 @@ let caliExercise = {
 		//image:
 		//video:
 	},
-	'planche': {
+	planche: {
 		name: `Planche`,
 		level: 5,
 		description: `Hold planche for 5s`,
@@ -36,17 +48,21 @@ let caliExercise = {
 	},
 }
 
-app.get('/', (request, response) => {
-	response.sendFile(__dirname + '/index.html')
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// Handlers
+
+app.get('/', (req, res) => {
+	res.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/caliExercise/:exName', (request, response) => {
-	const nameOfEx = request.params.exName.toLowerCase()
+app.get('/api/caliExercise/:exName', (req, res) => {
+	const nameOfEx = req.params.exName.toLowerCase()
 	console.log(nameOfEx)
 	if (caliExercise[nameOfEx]) {
-		response.json(caliExercise[nameOfEx])
+		res.json(caliExercise[nameOfEx])
 	} else {
-		response.json(caliExercise['push up'])
+		res.json(caliExercise['push up'])
 	}
 })
 
