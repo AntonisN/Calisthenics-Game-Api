@@ -1,45 +1,47 @@
+// const path = require('path')
 const express = require('express')
 const app = express()
 const cors = require('cors')
 const PORT = 9000
 
 app.use(cors())
+app.use('/client-side', express.static('./client-side/'))  // 
 
 let caliExercise = {
 	'handstand': {
-    'name':`Handstand` ,
-		'level': 5,
-		'description': `Hold handstand for 20s`,
+		name: `Handstand`,
+		level: 5,
+		description: `Hold handstand for 20s`,
 		//image:
 		//video:
 	},
 	'muscle up': {
-    'name':`Muscle Up` ,
-		'level': 5,
-		'description': `Do 5 muscle ups`,
+		name: `Muscle Up`,
+		level: 5,
+		description: `Do 5 muscle ups`,
 		//image:
 		//video:
 	},
 	'planche': {
-    'name': `Planche`,
-		'level': 5,
-		'description': `Hold planche for 5s`,
+		name: `Planche`,
+		level: 5,
+		description: `Hold planche for 5s`,
 		//image:
 		//video:
 	},
-  'push up': {
-    'name': `Push Up`,
-    'level': 3,
-    'description': `Do 10 Pushups perfect form`
-  }
+	'push up': {
+		name: `Push Up`,
+		level: 3,
+		description: `Do 10 Pushups perfect form`,
+	},
 }
 
 app.get('/', (request, response) => {
 	response.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/caliExercise/:ExName', (request, response) => {
-	const nameOfEx = request.params.ExName.toLowerCase()
+app.get('/api/caliExercise/:exName', (request, response) => {
+	const nameOfEx = request.params.exName.toLowerCase()
 	console.log(nameOfEx)
 	if (caliExercise[nameOfEx]) {
 		response.json(caliExercise[nameOfEx])
@@ -49,5 +51,6 @@ app.get('/api/caliExercise/:ExName', (request, response) => {
 })
 
 app.listen(process.env.PORT || PORT, () => {
+	//Heroku || locally
 	console.log(`Server listening on ${PORT}`)
 })
